@@ -1,0 +1,139 @@
+.payment-success-container {
+  padding: 1rem;
+  background-color: #f9fafb;
+  min-height: 100vh;
+}
+
+.payment-success-content {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+.payment-success-header {
+  text-align: center;
+  margin: 2rem auto;
+  width: 50%;
+  padding: 1rem 1.5rem;
+  background: #2c3e50;
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+  border-top-left-radius: 60px;
+  border-top-right-radius: 60px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  transform: perspective(600px) rotateX(-4deg);
+}
+
+.session-info {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+
+.session-info span {
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: #2f3e4d;
+}
+
+.seats-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.seat-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.5rem 1rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.row-label {
+  min-width: 120px;
+  font-weight: 600;
+  color: #34495e;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.seats-in-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  flex: 1;
+  padding: 0.4rem;
+}
+
+.seat {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #ced4da;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f9fa;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: default;
+  position: relative;
+}
+
+.seat.selected {
+  background: #40c057;
+  color: white;
+  border-color: #37b24d;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.payment-footer {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.total-amount {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #495057;
+}
+
+.return-home-button {
+  padding: 0.8rem 2rem;
+  background: #339af0;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.return-home-button:hover {
+  background: #228be6;
+}

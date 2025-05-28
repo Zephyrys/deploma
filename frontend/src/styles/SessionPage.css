@@ -1,0 +1,69 @@
+.session-selection {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.session-card {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: grid;
+  grid-template-columns: 2fr 3fr 2fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.movie-info h3 {
+  margin: 0 0 0.5rem;
+  color: #2c3e50;
+}
+
+.genre {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.cinema-info h4 {
+  margin: 0 0 0.5rem;
+  color: #34495e;
+}
+
+.cinema-info p {
+  margin: 0.3rem 0;
+  font-size: 0.9rem;
+}
+
+.session-time {
+  text-align: right;
+}
+
+.seats-available {
+  font-weight: bold;
+  color: #27ae60;
+  margin-top: 0.5rem;
+}
+
+.select-button {
+  grid-column: 1 / -1;
+  background: #3498db;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.select-button:hover {
+  background: #2980b9;
+}
+
+.error {
+  color: #e74c3c;
+  padding: 2rem;
+  text-align: center;
+}

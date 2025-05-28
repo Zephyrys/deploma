@@ -1,0 +1,73 @@
+/* Загальні стилі для сторінки фільму */
+.movie-page {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  /* Заголовок фільму */
+  .movie-page h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    text-align: center;
+  }
+  
+  /* Контейнер для основного вмісту */
+  .movie-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  /* Постер фільму */
+  .movie-page img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Опис фільму */
+  .movie-page p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    text-align: justify;
+    margin: 10px 0;
+  }
+  
+  /* Деталі фільму (рік, жанр, рейтинг тощо) */
+  .movie-details {
+    width: 100%;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .movie-details p {
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  /* Кнопка "Повернутися" */
+  .back-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .back-button:hover {
+    background-color: #2980b9;
+  }
+  

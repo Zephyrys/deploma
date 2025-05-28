@@ -1,0 +1,18 @@
+.movie-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .movie-card {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    width: 200px;
+    text-align: center;
+  }
+  
+  .movie-card img {
+    max-width: 100%;
+    height: auto;
+  }
