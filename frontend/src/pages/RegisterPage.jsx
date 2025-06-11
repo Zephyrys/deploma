@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../services/api';
 import '../styles/RegisterForm.css';
 import { useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 const RegisterPage = () => {
 
   const [username, setUsername] = useState('');
@@ -58,6 +59,16 @@ const RegisterPage = () => {
         {error && <p className="error">{error}</p>}
         <button type="submit">Зареєструватися</button>
       </form>
+      <div>
+        <p> Вже маєте обліковий запис?    
+           <Link
+                to={{ pathname: `/login` }}
+              >Увійти
+              </Link>
+        </p>
+             
+      </div>
+
     </div>
   );
 };

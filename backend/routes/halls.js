@@ -1,20 +1,20 @@
 const express = require('express');
+const {
+  getAllHalls,
+  getHallById,
+  createHall,
+  updateHall,
+  deleteHall
+} = require('../controllers/hallController');
+const authenticate = require('../middleware/authenticate');
+const { accessControl } = require('../middleware/accessControl');
+
 const router = express.Router();
-const hallController = require('../controllers/hallController');
 
-// GET всі зали
-router.get('/', hallController.getAllHalls);
-
-// GET один зал по id
-router.get('/:id', hallController.getHallById);
-
-// POST створити зал
-router.post('/', hallController.createHall);
-
-// PUT оновити зал
-router.put('/:id', hallController.updateHall);
-
-// DELETE видалити зал
-router.delete('/:id', hallController.deleteHall);
+router.get('/', getAllHalls);
+router.get('/:id', getHallById);
+router.post('/', authenticate, accessControl('create'), createHall);
+router.put('/:id', authenticate, accessControl('update'), updateHall);
+router.delete('/:id', authenticate, accessControl('delete'), deleteHall);
 
 module.exports = router;

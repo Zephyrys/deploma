@@ -19,6 +19,6 @@ const hallSchema = new mongoose.Schema({
     }
   }]],
   amenities: [String]
-});
+},{ timestamps: true });
 
 module.exports = mongoose.model('Hall', hallSchema);

@@ -1,35 +1,32 @@
 const Session = require('../models/Session');
 
-// Функція для оновлення статусу сеансу
 const updateSessionStatus = async (session) => {
   const now = new Date();
 
   if (session.startTime <= now && session.endTime > now) {
-    session.status = 'active'; // Сеанс активний
+    session.status = 'active';
   } else if (session.endTime <= now) {
-    session.status = 'completed'; // Сеанс завершений
+    session.status = 'completed';
   } else {
-    session.status = 'scheduled'; // Сеанс запланований
+    session.status = 'scheduled'; 
   }
 
   await session.save();
   return session;
 };
 
-// Функція для створення сеансу
 const createSession = async (sessionData) => {
   const session = new Session(sessionData);
-  await updateSessionStatus(session); // Оновлюємо статус перед збереженням
+  await updateSessionStatus(session);
   return session;
 };
 
-// Функція для оновлення сеансу
 const updateSession = async (sessionId, sessionData) => {
   const session = await Session.findByIdAndUpdate(sessionId, sessionData, { new: true });
   if (!session) {
     throw new Error('Session not found');
   }
-  await updateSessionStatus(session); // Оновлюємо статус після оновлення
+  await updateSessionStatus(session); 
   return session;
 };
 

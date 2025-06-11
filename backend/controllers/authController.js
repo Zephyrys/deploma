@@ -5,8 +5,6 @@ const User = require('../models/User');
 const register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
-
-    // Валідація вхідних даних
     if (!username || !email || !password) {
       return res.status(400).json({ 
         success: false,
@@ -14,7 +12,6 @@ const register = async (req, res) => {
       });
     }
 
-    // Перевірка унікальності
     const existingUser = await User.findOne({ $or: [{ email }, { username }] });
     if (existingUser) {
       const field = existingUser.email === email ? 'email' : 'username';
@@ -25,10 +22,8 @@ const register = async (req, res) => {
       });
     }
 
-    // Хешування пароля
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Створення користувача
     const user = new User({
       username: username.trim(),
       email: email.trim().toLowerCase(),

@@ -8,6 +8,7 @@ const movieSchema = new mongoose.Schema({
   releaseDate: { type: Date, required: true }, 
   posterId: { type: mongoose.Schema.Types.ObjectId, ref: 'Poster' }, 
   rating: { type: Number, min: 1, max: 10 }, 
-});
+  ratingCount: { type: Number, default: 0 },
+},{ timestamps: true });
 
 module.exports = mongoose.model('Movie', movieSchema);

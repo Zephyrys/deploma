@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { getSessions } from '../services/api';
-import '../styles/SessionSelection.css';
+import '../styles/SessionPage.css';
 import { Link } from 'react-router-dom';
 
 const SessionPage = () => {
   const [sessions, setSessions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [selectedCinema, setSelectedCinema] = useState('Усі');
+  const [selectedMovie, setSelectedMovie] = useState('Усі');
 
   useEffect(() => {
     const fetchSessions = async () => {
@@ -27,24 +30,92 @@ const SessionPage = () => {
     fetchSessions();
   }, []);
 
+  const uniqueCinemas = [
+    'Усі',
+    ...Array.from(
+      new Set(
+        sessions
+          .map((s) => s.hallId?.cinemaId)
+          .filter(Boolean)
+          .map((cinema) => cinema.name)
+      )
+    ),
+  ];
+
+  const uniqueMovies = [
+    'Усі',
+    ...Array.from(
+      new Set(
+        sessions
+          .map((s) => s.movieId?.title)
+          .filter(Boolean)
+      )
+    ),
+  ];
+
+  const filteredSessions = sessions.filter((s) => {
+    const cinemaMatch =
+      selectedCinema === 'Усі' || s.hallId?.cinemaId?.name === selectedCinema;
+    const movieMatch =
+      selectedMovie === 'Усі' || s.movieId?.title === selectedMovie;
+    return cinemaMatch && movieMatch;
+  });
+
   if (error) {
     return <div className="error">{error}</div>;
   }
 
   if (isLoading) {
-    return <div>Завантаження сеансів...</div>;
+    return <div className="loading">Завантаження сеансів...</div>;
   }
 
   return (
     <div className="session-selection">
       <h2>Виберіть сеанс</h2>
-      <ul>
-        {sessions.map((session) => {
+
+      <div className="filters-container">
+        <div className="filter-section">
+          <label htmlFor="cinema-filter">Фільтрувати за кінотеатром:</label>
+          <select
+            id="cinema-filter"
+            value={selectedCinema}
+            onChange={(e) => setSelectedCinema(e.target.value)}
+          >
+            {uniqueCinemas.map((cinemaName) => (
+              <option key={cinemaName} value={cinemaName}>
+                {cinemaName}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="filter-section">
+          <label htmlFor="movie-filter">Фільтрувати за фільмом:</label>
+          <select
+            id="movie-filter"
+            value={selectedMovie}
+            onChange={(e) => setSelectedMovie(e.target.value)}
+          >
+            {uniqueMovies.map((movieTitle) => (
+              <option key={movieTitle} value={movieTitle}>
+                {movieTitle}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <ul className="session-list">
+        {filteredSessions.map((session) => {
           const startTime = new Date(session.startTime).toLocaleString();
           const endTime = new Date(session.endTime).toLocaleString();
-          const availableSeats = session.seats.flat().filter(seat => !seat).length;
+          const availableSeats = session.seats
+            .flat()
+            .filter((seat) => !seat.isOccupied).length;
+
           const cinema = session.hallId?.cinemaId;
           const hall = session.hallId;
+          const isCompleted = session.status === 'completed';
 
           return (
             <li key={session._id} className="session-card">
@@ -68,13 +139,19 @@ const SessionPage = () => {
                 <p className="seats-available">Вільних місць: {availableSeats}</p>
               </div>
 
-              <Link
-                to={{pathname:`/seats/${session._id}`}}
-                state={session.seats}
-                className="select-button"
-              >
-                Вибрати місця
-              </Link>
+              {isCompleted ? (
+                <button className="select-button disabled" disabled>
+                  Сеанс завершено
+                </button>
+              ) : (
+                <Link
+                  to={{ pathname: `/seats/${session._id}` }}
+                  state={session.seats}
+                  className="select-button"
+                >
+                  Вибрати місця
+                </Link>
+              )}
             </li>
           );
         })}

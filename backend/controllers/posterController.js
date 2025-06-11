@@ -1,6 +1,6 @@
 const sharp = require('sharp');
 const path = require('path');
-const fs = require('fs');
+const fs = require('fs/promises');
 const Poster = require('../models/Poster');
 
 const uploadPoster = async (req, res) => {
@@ -21,12 +21,10 @@ const uploadPoster = async (req, res) => {
     let finalFilePath;
 
     if (ext === '.webp') {
-      // Файл вже у форматі webp - не конвертуємо, залишаємо як є
       console.log('ℹ️ Файл вже у форматі webp, конвертація пропущена');
       finalFilename = req.file.filename;
       finalFilePath = filePath;
     } else {
-      // Конвертуємо у webp з новою назвою
       finalFilename = baseName + '.webp';
       finalFilePath = path.join(uploadsDir, finalFilename);
 
@@ -36,15 +34,12 @@ const uploadPoster = async (req, res) => {
       await sharp(filePath)
         .webp({ quality: 80 })
         .toFile(finalFilePath);
-
+      
       console.log('✅ Конвертація в WebP завершена');
 
-      // Видаляємо оригінальний файл після конвертації
-      fs.unlinkSync(filePath);
+      await fs.unlink(filePath);
       console.log('🗑️ Оригінальний файл видалено');
     }
-
-    // Зберігаємо інформацію про постер у базу
     const poster = new Poster({
       filename: finalFilename,
       path: finalFilePath,
@@ -61,5 +56,20 @@ const uploadPoster = async (req, res) => {
     res.status(500).json({ message: 'Помилка при завантаженні постера' });
   }
 };
+const deletePosterById = async (posterId) => {
+  if (!posterId) return;
 
-module.exports = { uploadPoster };
+  try {
+    const poster = await Poster.findById(posterId);
+    if (!poster) return;
+
+    await fs.unlink(poster.path);
+
+    await Poster.findByIdAndDelete(posterId);
+  } catch (err) {
+    console.error('Помилка при видаленні постера:', err);
+    throw err; 
+  }
+};
+
+module.exports = { uploadPoster, deletePosterById };

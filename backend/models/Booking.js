@@ -14,11 +14,11 @@ const bookingSchema = new mongoose.Schema({
    seats: [{
     row: {
       type: Number,
-      required: true // Required for each object in the seats array
+      required: true 
     },
     seat: {
       type: Number,
-      required: true // Required for each object in the seats array
+      required: true 
     }
   }],
   tickets: [{
@@ -27,7 +27,7 @@ const bookingSchema = new mongoose.Schema({
   }],
     status: {
     type: String,
-    enum: ['pending', 'confirmed', 'canceled'], // <-- тут
+    enum: ['pending', 'confirmed', 'canceled'], 
   },
   amount: {
     type: Number,
@@ -35,7 +35,7 @@ const bookingSchema = new mongoose.Schema({
   },
   paymentStatus: {
     type: String,
-    enum: ['processing', 'paid', 'failed'], // <-- і тут
+    enum: ['processing', 'paid', 'failed'], 
   },
   expiryTime: {
     type: Date,

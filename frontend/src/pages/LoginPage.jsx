@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import '../styles/LoginForm.css';
-
+import { Link } from 'react-router-dom';
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -50,6 +50,15 @@ const LoginPage = () => {
           Увійти
         </button>
       </form>
+      <div>
+        <p> Ще не маєте обілоково запису?    
+           <Link
+                to={{ pathname: `/register` }}
+              >Зареєструватись
+              </Link>
+        </p>
+             
+      </div>
     </div>
   );
 };

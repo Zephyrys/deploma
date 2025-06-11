@@ -1,8 +1,6 @@
-// models/Ticket.js
 const mongoose = require('mongoose');
 
 const ticketSchema = new mongoose.Schema({
-  // Ряд і місце
   row: {
     type: Number,
     required: [true, 'Ряд обовʼязковий'],
@@ -14,24 +12,20 @@ const ticketSchema = new mongoose.Schema({
     min: [1, 'Номер місця повинен бути більше 0']
   },
 
-  // Інформація про фільм
   movieTitle: {
     type: String,
     required: [true, 'Назва фільму обовʼязкова']
   },
   movieFormat: {
-    type: String,
-    required: [true, 'Формат фільму обовʼязковий']  // наприклад, "2D" або "3D"
+    type: [String],
+    required: [true, 'Формат обовʼязковий']  
   },
-
-  // Ціна квитка
   price: {
     type: Number,
     required: [true, 'Ціна обовʼязкова'],
     min: [0, 'Ціна не може бути відʼємною']
   },
 
-  // Інформація про сеанс
   sessionId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Session',
@@ -46,20 +40,17 @@ const ticketSchema = new mongoose.Schema({
     required: [true, 'Дата/час завершення сеансу обовʼязковий']
   },
 
-  // Інформація про кінотеатр
   cinema: {
     type: String,
     required: [true, 'Назва кінотеатру обовʼязкова']
   },
 
-  // Бронювання
   bookingId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Booking',
     required: [true, 'ID бронювання обовʼязковий']
   },
 
-  // Статус квитка
   status: {
     type: String,
     enum: {
@@ -69,7 +60,6 @@ const ticketSchema = new mongoose.Schema({
     default: 'reserved'
   },
 
-  // QR-код
   qrCode: {
     type: String,
     required: true

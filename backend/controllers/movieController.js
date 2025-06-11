@@ -1,162 +1,131 @@
-// const Movie = require('../models/Movie');
-
-// const getAllMovies = async (req, res) => {
-//   try {
-//     const movies = await Movie.find().populate('posterId');
-//     res.json(movies);
-//   } catch (err) {
-//     res.status(500).json({ message: 'Error fetching movies' });
-//   }
-// };
-
-// const getMovieById = async (req, res) => {
-//   try {
-//     const movie = await Movie.findById(req.params.id).populate('posterId');
-//     if (!movie) {
-//       return res.status(404).json({ message: 'Movie not found' });
-//     }
-//     res.json(movie);
-//   } catch (err) {
-//     res.status(500).json({ message: 'Error fetching movie' });
-//   }
-// };
-
-// const createMovie = async (req, res) => {
-//   try {
-//     const movie = new Movie(req.body);
-//     await movie.save();
-//     res.status(201).json(movie);
-//   } catch (err) {
-//     res.status(500).json({ message: 'Error creating movie' });
-//   }
-// };
-
-// const updateMovie = async (req, res) => {
-//     try {
-//       const { id } = req.params;
-//       const updatedMovie = await Movie.findByIdAndUpdate(id, req.body, { new: true });
-//       res.json(updatedMovie);
-//     } catch (err) {
-//       res.status(500).json({ message: 'Помилка при оновленні фільму' });
-//     }
-//   };
-
-// const deleteMovie = async (req, res) => {
-//   try {
-//     const movie = await Movie.findByIdAndDelete(req.params.id);
-//     if (!movie) {
-//       return res.status(404).json({ message: 'Movie not found' });
-//     }
-//     res.json({ message: 'Movie deleted' });
-//   } catch (err) {
-//     res.status(500).json({ message: 'Error deleting movie' });
-//   }
-// };
-
-// module.exports = { getAllMovies, getMovieById, createMovie, updateMovie, deleteMovie }; 
-const mongoose = require('mongoose');
 const Movie = require('../models/Movie');
-const Poster = require('../models/Poster'); 
-const { deleteSessionsByMovieId } = require('./sessionController'); 
-// const getAllMovies = async (req, res) => {
-//   try {
-//     const movies = await Movie.find().populate({
-//       path: 'posterId',
-//       select: 'url filename' // Отримуємо тільки потрібні поля
-//     });
-    
-//     const transformedMovies = movies.map(movie => ({
-//       ...movie._doc,
-//       posterUrl: movie.posterId?.url || '/default-poster.jpg'
-//     }));
-    
-//     res.status(200).json(transformedMovies);
-//   } catch (err) {
-//     console.error('Error:', err);
-//     res.status(500).json({ error: err.message });
-//   }
-// };
-
+const mongoose = require('mongoose');
+const { deletePosterById } = require('./posterController');
 const getAllMovies = async (req, res) => {
   try {
-    const movies = await Movie.find().populate('posterId');
+    const movies = await Movie.find().populate('posterId'); 
     res.json(movies);
   } catch (err) {
-    res.status(500).json({ message: 'Error fetching movies' });
+    res.status(500).json({ message: 'Server error while fetching movies' });
   }
 };
 
 
-// Решта контролерів залишаються незмінними
 const getMovieById = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: 'Invalid movie ID' });
+  }
   try {
-    const movie = await Movie.findById(req.params.id).populate('posterId');
+    const movie = await Movie.findById(id).populate('posterId');
     if (!movie) {
       return res.status(404).json({ message: 'Movie not found' });
     }
     res.json(movie);
   } catch (err) {
-    res.status(500).json({ message: 'Error fetching movie' });
+    res.status(500).json({ message: 'Server error while fetching movie' });
   }
 };
 
-
 const createMovie = async (req, res) => {
   try {
-    console.log('📥 Отримані дані для створення фільму:', req.body);
-
-    const { title, genre, duration, releaseDate, posterId } = req.body;
-
-    if (!title || !genre || !duration || !releaseDate) {
-      console.warn('⚠️ Відсутні обовʼязкові поля:', { title, genre, duration, releaseDate });
-      return res.status(400).json({ message: 'Відсутні обовʼязкові поля' });
-    }
-
-    if (posterId && !mongoose.Types.ObjectId.isValid(posterId)) {
-      console.warn('⚠️ Невалідний posterId:', posterId);
-      return res.status(400).json({ message: 'Невалідний posterId' });
-    }
-
-    const movie = new Movie(req.body);
-    await movie.save();
-
-    console.log('✅ Фільм успішно створено:', movie);
+    const movie = await Movie.create(req.body);
+    console.log('[createMovie] Movie Created: ', movie)
     res.status(201).json(movie);
   } catch (err) {
-    console.error('🔴 Помилка при створенні фільму:', err);
-    res.status(500).json({ message: 'Error creating movie', error: err.message });
+    res.status(400).json({ message: err.message });
   }
 };
 
 const updateMovie = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: 'Invalid movie ID' });
+  }
   try {
-    const { id } = req.params;
     const updatedMovie = await Movie.findByIdAndUpdate(id, req.body, { new: true });
+    if (!updatedMovie) {
+      return res.status(404).json({ message: 'Movie not found' });
+    }
     res.json(updatedMovie);
   } catch (err) {
-    res.status(500).json({ message: 'Помилка при оновленні фільму' });
+    res.status(400).json({ message: err.message });
   }
 };
 
-
-
-
 const deleteMovie = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: 'Invalid movie ID' });
+  }
   try {
-    const movieId = req.params.id;
+    const movie = await Movie.findById(id);
 
-    const movie = await Movie.findByIdAndDelete(movieId);
     if (!movie) {
       return res.status(404).json({ message: 'Movie not found' });
     }
 
-    await deleteSessionsByMovieId(movieId);
+    if (movie.posterId) {
+      try {
+        await deletePosterById(movie.posterId);
+      } catch (err) {
+        console.error('Помилка при видаленні постера:', err);
+      }
+    }
 
-    res.json({ message: 'Movie and related sessions deleted' });
+    await Movie.findByIdAndDelete(id);
+
+    res.json({ message: 'Movie and its poster deleted successfully' });
   } catch (err) {
-    console.error('Error deleting movie or related sessions:', err);
-    res.status(500).json({ message: 'Error deleting movie and related sessions' });
+    res.status(500).json({ message: 'Server error while deleting movie' });
+  }
+};
+const rateMovie = async (req, res) => {
+  const { movieId, rating } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(movieId)) {
+    return res.status(400).json({ message: 'Invalid movie ID' });
+  }
+
+  if (typeof rating !== 'number' || rating < 1 || rating > 10) {
+    return res.status(400).json({ message: 'Rating must be a number between 1 and 10' });
+  }
+
+  try {
+    const movie = await Movie.findById(movieId);
+
+    if (!movie) {
+      return res.status(404).json({ message: 'Movie not found' });
+    }
+
+    const currentTotal = (movie.rating || 0) * (movie.ratingCount || 0);
+    const newCount = (movie.ratingCount || 0) + 1;
+    const newAverage = (currentTotal + rating) / newCount;
+
+    movie.rating = newAverage;
+    movie.ratingCount = newCount;
+
+    await movie.save();
+
+    return res.json({
+      message: 'Rating updated successfully',
+      movie,
+    });
+  } catch (err) {
+    console.error('Error updating rating:', err);
+    return res.status(500).json({ message: 'Server error while updating rating' });
   }
 };
 
-module.exports = { getAllMovies, getMovieById, createMovie, updateMovie, deleteMovie };
+
+
+
+
+module.exports = {
+  getAllMovies,
+  getMovieById,
+  createMovie,
+  updateMovie,
+  deleteMovie,
+  rateMovie
+};

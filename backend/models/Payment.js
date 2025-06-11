@@ -12,11 +12,7 @@ const paymentSchema = new mongoose.Schema({
   cardLast4: {
     type: String,
     required: true
-  },
-  tickets: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Ticket'
-  }]
-});
+  }
+},{ timestamps: true });
 
 module.exports = mongoose.model('Payment', paymentSchema);

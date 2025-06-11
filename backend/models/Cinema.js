@@ -8,8 +8,6 @@ const cinemaSchema = new mongoose.Schema({
   openingHours: { type: String },
   city: { type: String },
   isActive: { type: Boolean, default: true },
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
-});
+},{ timestamps: true });
 
 module.exports = mongoose.model('Cinema', cinemaSchema);

@@ -1,65 +1,213 @@
-/* src/styles/RegisterForm.css */
 .register-page {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  animation: fadeInRegister 0.5s ease forwards;
+  opacity: 0;
+}
+
+.register-page h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+  animation: slideDownRegister 0.5s ease forwards;
+  opacity: 0;
+}
+
+.register-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: slideUpRegister 0.5s ease forwards 0.3s;
+  opacity: 0;
+}
+
+.register-page form div {
+  display: flex;
+  flex-direction: column;
+}
+
+.register-page label {
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555;
+  font-size: 1rem;
+  user-select: none;
+}
+
+.register-page input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.8px solid #aac4e8;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #2c3e50;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fefeff;
+  font-family: inherit;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.register-page input::placeholder {
+  color: #a1a8bb;
+  font-style: italic;
+}
+
+.register-page input:focus {
+  border-color: #2978b5;
+  box-shadow: 0 0 6px #3f8efcaa;
+  outline: none;
+  background-color: #fcfdff;
+}
+
+.register-page button {
+  padding: 14px 0;
+  background-color: #2978b5;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 4px 12px #3f8efc88;
+  transition: background-color 0.25s ease, transform 0.2s ease;
+}
+
+.register-page button:hover,
+.register-page button:focus {
+  background-color: #1c4e78;
+  transform: translateY(-2px);
+  outline: none;
+  box-shadow: 0 6px 18px #2362a0cc;
+}
+
+.register-page .error {
+  color: #d93025;
+  text-align: center;
+  margin-top: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  user-select: none;
+  animation: shakeRegister 0.3s ease;
+}
+.register-page p {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.95rem;
+  color: #3b4a60;
+  font-weight: 500;
+}
+
+.register-page p a {
+  color: #2978b5;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 6px;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.register-page p a:hover {
+  color: #1c4e78;
+  text-shadow: 0 0 4px rgba(41, 120, 181, 0.3);
+}
+
+@keyframes fadeInRegister {
+  to {
+    opacity: 1;
   }
-  
+}
+
+@keyframes slideDownRegister {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUpRegister {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shakeRegister {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  20%, 60% {
+    transform: translateX(-5px);
+  }
+  40%, 80% {
+    transform: translateX(5px);
+  }
+}
+@media (max-width: 600px) {
+  .register-page {
+    max-width: 90%;
+    margin: 30px auto;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  }
+
   .register-page h2 {
-    text-align: center;
+    font-size: 1.5rem;
     margin-bottom: 20px;
-    color: #333;
   }
-  
+
   .register-page form {
-    display: flex;
-    flex-direction: column;
+    gap: 14px;
   }
-  
-  .register-page form div {
-    margin-bottom: 15px;
-  }
-  
+
   .register-page label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #555;
+    font-size: 0.9rem;
   }
-  
+
   .register-page input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
+    padding: 10px 12px;
+    font-size: 0.95rem;
   }
-  
-  .register-page input:focus {
-    border-color: #007bff;
-    outline: none;
-  }
-  
+
   .register-page button {
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
+    padding: 12px 0;
+    font-size: 1rem;
+    border-radius: 8px;
   }
-  
-  .register-page button:hover {
-    background-color: #0056b3;
+}
+
+@media (max-width: 400px) {
+  .register-page {
+    margin: 20px auto;
+    padding: 12px;
   }
-  
-  .register-page .error {
-    color: #ff0000;
-    text-align: center;
-    margin-top: 10px;
+
+  .register-page h2 {
+    font-size: 1.3rem;
   }
+
+  .register-page input {
+    padding: 8px 10px;
+    font-size: 0.9rem;
+  }
+
+  .register-page button {
+    font-size: 0.95rem;
+    padding: 10px 0;
+  }
+}

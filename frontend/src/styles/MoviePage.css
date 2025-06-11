@@ -1,73 +1,242 @@
-/* Загальні стилі для сторінки фільму */
 .movie-page {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    font-family: Arial, sans-serif;
-    color: #333;
+  max-width: 850px;
+  margin: 3rem auto;
+  padding: 2rem 3rem;
+  background: linear-gradient(135deg, #f0f5ff 0%, #dbe9ff 100%);
+  border-radius: 24px;
+  box-shadow: 0 14px 40px rgba(41, 128, 185, 0.25);
+  color: #1a2b49;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  user-select: text;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  /* Заголовок фільму */
-  .movie-page h2 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    color: #2c3e50;
-    text-align: center;
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  /* Контейнер для основного вмісту */
-  .movie-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+}
+
+.movie-page__loading,
+.movie-page__notfound {
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 5rem 1rem;
+  color: #3a6ed8;
+}
+
+.movie-page__title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: #2b3a67;
+  text-align: center;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 4px rgba(43, 58, 103, 0.3);
+}
+
+.movie-page__poster {
+  display: block;
+  width: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  margin: 1.8rem auto 3rem;
+  border-radius: 24px;
+  box-shadow: 0 10px 32px rgba(43, 58, 103, 0.3);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  cursor: pointer;
+}
+
+.movie-page__poster:hover {
+  transform: scale(1.03);
+  box-shadow: 0 18px 50px rgba(43, 58, 103, 0.5);
+}
+
+.movie-page__info {
+  font-size: 1.3rem;
+  line-height: 1.7;
+  color: #34425a;
+  user-select: text;
+}
+
+.movie-page__description {
+  margin-bottom: 2.8rem;
+  font-style: italic;
+  color: #47597e;
+  border-left: 4px solid #3a6ed8;
+  padding-left: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  background: #e4ecffcc;
+  border-radius: 12px;
+  box-shadow: inset 0 0 8px rgba(58, 110, 216, 0.15);
+  transition: background-color 0.3s ease;
+}
+
+.movie-page__description:hover {
+  background-color: #d2e3ffdd;
+}
+
+.movie-page__details-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.8rem;
+}
+
+.movie-page__details-list li {
+  background: #ffffffcc;
+  border-radius: 16px;
+  padding: 1.3rem 1.5rem;
+  color: #2b3a67;
+  font-weight: 600;
+  font-size: 1.15rem;
+  box-shadow: 0 5px 20px rgba(58, 110, 216, 0.18);
+  border: 2px solid transparent;
+  cursor: default;
+  transition: box-shadow 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.movie-page__details-list li strong {
+  color: #3a6ed8;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: 0.9rem;
+  width: auto;
+}
+
+.movie-page__details-list li:hover {
+  box-shadow: 0 10px 36px rgba(58, 110, 216, 0.35);
+  border-color: #3a6ed8;
+  transform: translateY(-6px);
+}
+
+/* --- Виправлений стиль для рейтингу зі зірками --- */
+.movie-page__rating-stars {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+  user-select: none;
+  max-width: 100%;
+}
+
+.movie-page__rating-stars .star {
+  font-size: 1.6rem;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  user-select: none;
+  display: inline-block;
+}
+
+.movie-page__rating-stars .star.filled {
+  color: #f5a623;
+  animation: fillStar 0.4s ease forwards;
+}
+
+.movie-page__user-rating {
+  font-size: 1rem;
+  color: #3a6ed8;
+  font-weight: 700;
+  margin-left: 0.75rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+@keyframes fillStar {
+  0% {
+    color: #ccc;
+    transform: scale(0.6);
+    filter: brightness(0.7);
   }
-  
-  /* Постер фільму */
-  .movie-page img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  50% {
+    transform: scale(1.3);
+    filter: brightness(1.2);
   }
-  
-  /* Опис фільму */
-  .movie-page p {
+  100% {
+    color: #f5a623;
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+@media (max-width: 900px) {
+  .movie-page {
+    max-width: 95%;
+    margin: 2rem auto;
+    padding: 1.5rem 2rem;
+  }
+
+  .movie-page__title {
+    font-size: 2.4rem;
+  }
+
+  .movie-page__info {
     font-size: 1.1rem;
-    line-height: 1.6;
-    text-align: justify;
-    margin: 10px 0;
   }
-  
-  /* Деталі фільму (рік, жанр, рейтинг тощо) */
-  .movie-details {
-    width: 100%;
-    background-color: #f9f9f9;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 480px) {
+  .movie-page {
+    padding: 1rem 1.2rem;
+    margin: 1.5rem auto;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(41, 128, 185, 0.15);
   }
-  
-  .movie-details p {
-    margin: 5px 0;
+
+  .movie-page__title {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .movie-page__poster {
+    max-height: 240px;
+    margin: 1rem auto 2rem;
+  }
+
+  .movie-page__description {
     font-size: 1rem;
-    color: #555;
+    padding-left: 0.8rem;
+    margin-bottom: 2rem;
   }
-  
-  /* Кнопка "Повернутися" */
-  .back-button {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #3498db;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
+
+  .movie-page__details-list {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
+  .movie-page__details-list li {
     font-size: 1rem;
-    transition: background-color 0.3s ease;
+    padding: 1rem 1.2rem;
   }
-  
-  .back-button:hover {
-    background-color: #2980b9;
+
+  .movie-page__rating-stars {
+    font-size: 1.3rem;
+    gap: 0.15rem;
   }
-  
+
+  .movie-page__rating-stars .star {
+    font-size: 1.3rem;
+  }
+
+  .movie-page__user-rating {
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+  }
+}

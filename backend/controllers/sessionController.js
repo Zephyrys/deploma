@@ -1,23 +1,33 @@
 const Session = require('../models/Session');
 const sessionService = require('../services/sessionService');
-const Hall = require('../models/Hall'); // Додати імпорт
-const Cinema = require('../models/Cinema'); // Додати імпорт
+const Hall = require('../models/Hall'); 
+
+
 
 const createSession = async (req, res) => {
   try {
     const hall = await Hall.findById(req.body.hallId);
     if (!hall) throw new Error("Hall not found");
     
-    const session = await Session.create({
+    const session = await sessionService.createSession({
       ...req.body,
       seats: hall.seats.map(row => [...row])
     });
 
-    res.status(201).json(session);
+
+    const populatedSession = await Session.findById(session._id)
+      .populate('movieId')
+      .populate({
+        path: 'hallId',
+        populate: { path: 'cinemaId' }
+      });
+
+    res.status(201).json(populatedSession);
   } catch (err) {
-    res.status(400).json({message: err.message});
+    res.status(400).json({ message: err.message });
   }
 };
+
 
 const updateSession = async (req, res) => {
   try {
@@ -50,10 +60,9 @@ const getSessionById = async (req, res) => {
       return res.status(404).json({ message: 'Session not found' });
     }
     
-    // Переконуємося, що seats існують у відповіді
     const sessionData = session.toObject();
     if (!sessionData.seats) {
-      sessionData.seats = session.hallId.seats; // Резервний варіант
+      sessionData.seats = session.hallId.seats; 
     }
 
     res.json(sessionData);
@@ -62,17 +71,16 @@ const getSessionById = async (req, res) => {
   }
 };
 
-// В контролері сеансів (sessionController.js)
 const getSessions = async (req, res) => {
   try {
     const sessions = await Session.find()
       .populate('movieId')
       .populate({
         path: 'hallId',
-        model: 'Hall', // Вказуємо явно модель
+        model: 'Hall', 
         populate: {
           path: 'cinemaId',
-          model: 'Cinema' // Вказуємо явно модель
+          model: 'Cinema' 
         }
       });
 
@@ -102,4 +110,21 @@ const deleteSessionsByMovieId = async (movieId) => {
     throw new Error('Error deleting related sessions');
   }
 };
-module.exports={getAllSessions,getSessionById,createSession,updateSession,deleteSession,getSessions,  deleteSessionsByMovieId}
+const validateSessionForPayment = async (sessionId, sessionTx) => {
+  const session = await Session.findById(sessionId).session(sessionTx);
+  if (!session) throw new Error('Сеанс не знайдено');
+  if (!['active', 'scheduled'].includes(session.status)) {
+  throw new Error(`Оплата недоступна. Сеанс має статус "${session.status}".`);
+}
+
+  return session;
+};
+module.exports={
+  getAllSessions,
+  getSessionById,
+  createSession,
+  updateSession,
+  deleteSession,
+  getSessions,  
+  deleteSessionsByMovieId,
+validateSessionForPayment}

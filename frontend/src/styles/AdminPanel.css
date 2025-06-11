@@ -1,94 +1,267 @@
-/* src/styles/AdminPanel.css */
 .admin-page {
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+
+  animation: fadeInUp 0.4s ease forwards;
+  opacity: 0;
+  transform: translateY(10px); 
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .admin-page h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
+}
+
+.admin-page h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.admin-page nav {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+
+  animation: fadeIn 0.3s ease forwards;
+  opacity: 0;
+  animation-delay: 0.15s;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
   }
-  
-  .admin-page button {
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-bottom: 20px;
+}
+
+.admin-page nav button {
+  padding: 10px 16px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-radius: 5px;
+}
+
+.admin-page nav button:hover {
+  background-color: #eee;
+}
+
+.admin-page nav button.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+section h2 {
+  margin-bottom: 16px;
+  font-size: 22px;
+
+  animation: fadeIn 0.3s ease forwards;
+  opacity: 0;
+  animation-delay: 0.3s;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+
+  animation: fadeIn 0.3s ease forwards;
+  opacity: 0;
+  animation-delay: 0.4s;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background-color: #f1f1f1;
+}
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+
+  animation: fadeInUp 0.4s ease forwards;
+  opacity: 0;
+  transform: translateY(10px);
+  animation-delay: 0.5s;
+}
+
+form input,
+form select {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  flex: 1;
+  min-width: 180px;
+}
+
+form input:focus,
+form select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+form button {
+  padding: 8px 14px;
+  font-size: 14px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+form button:hover {
+  background-color: #218838;
+}
+
+form button[type="button"] {
+  background-color: #6c757d;
+}
+
+form button[type="button"]:hover {
+  background-color: #5a6268;
+}
+
+button {
+  padding: 6px 12px;
+  font-size: 13px;
+  margin-right: 5px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+button:hover {
+  opacity: 0.85;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button.delete-button{
+  background-color: #dc3545;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+td button {
+  background-color: #007bff;
+  color: white;
+}
+
+td button:hover {
+  background-color: #0056b3;
+}
+
+td button:hover {
+  background-color: #c82333;
+}
+
+.sessions-section .session-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+
+  animation: fadeInUp 0.4s ease forwards;
+  opacity: 0;
+  transform: translateY(10px);
+  animation-delay: 0.55s;
+}
+
+.sessions-table {
+  margin-top: 20px;
+
+  animation: fadeIn 0.3s ease forwards;
+  opacity: 0;
+  animation-delay: 0.6s;
+}
+@media (max-width: 768px) {
+  .admin-page {
+    padding: 15px 10px;
   }
-  
-  .admin-page button:hover {
-    background-color: #0056b3;
+
+  .admin-page nav {
+    justify-content: center;
+    gap: 8px;
   }
-  
-  .admin-page ul {
-    list-style: none;
-    padding: 0;
+
+  .admin-page nav button {
+    flex: 1 1 auto;
+    font-size: 13px;
+    padding: 8px 10px;
+    min-width: unset;
   }
-  
-  .admin-page ul li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
+
+  section h2 {
+    font-size: 20px;
   }
-  
-  .admin-page ul li:last-child {
-    border-bottom: none;
+
+  table, 
+  th, td {
+    font-size: 13px;
   }
-  
-  .admin-page ul li span {
-    flex-grow: 1;
-    font-size: 18px;
-    color: #333;
+
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; 
   }
-  
-  .admin-page ul li button {
-    padding: 5px 10px;
-    margin-left: 10px;
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    cursor: pointer;
-  }
-  
-  .admin-page ul li button:hover {
-    background-color: #218838;
-  }
-  
-  .admin-page ul li button:last-child {
-    background-color: #dc3545;
-  }
-  
-  .admin-page ul li button:last-child:hover {
-    background-color: #c82333;
-  }
-  .edit-form {
-    display: flex;
+
+  form {
     flex-direction: column;
-    gap: 10px;
-    margin-top: 10px;
   }
-  
-  .edit-form input {
-    padding: 5px;
-    font-size: 14px;
+
+  form input,
+  form select {
+    min-width: 100%;
+    flex: unset;
   }
-  
-  .edit-form button {
+
+  form button {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  button {
+    font-size: 12px;
     padding: 5px 10px;
-    font-size: 14px;
-    cursor: pointer;
   }
+}
+
+@media (max-width: 480px) {
+  .admin-page {
+    padding: 10px 5px;
+  }
+
+  .admin-page nav {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .admin-page nav button {
+    width: 100%;
+  }
+
+  section h2 {
+    font-size: 18px;
+  }
+}

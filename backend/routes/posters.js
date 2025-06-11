@@ -1,7 +1,7 @@
 const express = require('express');
 const {uploadPoster} = require('../controllers/posterController');
 const authenticate = require('../middleware/authenticate');
-const {isAdmin} = require('../middleware/isAdmin');
+const {accessControl} = require('../middleware/accessControl');
 const multer = require('multer');
 const router = express.Router();
 
@@ -16,6 +16,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.post('/', authenticate, isAdmin, upload.single('poster'), uploadPoster);
+router.post('/', authenticate, accessControl('create'), upload.single('poster'), uploadPoster);
 
 module.exports = router;

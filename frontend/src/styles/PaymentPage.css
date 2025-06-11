@@ -1,11 +1,12 @@
 .payment-container {
-  max-width: 800px;
+  max-width: 900px;  
   margin: 2rem auto;
   padding: 2rem;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
+
 
 .loading-screen {
   text-align: center;
@@ -161,12 +162,45 @@
   animation: spin 0.8s linear infinite;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 480px) {
   .payment-container {
+    margin: 1rem;
     padding: 1rem;
+    max-width: 100%;
+    border-radius: 8px;
   }
 
-  .payment-content {
+  .payment-header {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .order-summary {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .form-group input {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+
+  .pay-button {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+
+  .form-row {
     grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .detail-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .detail-item span {
+    margin-top: 0.25rem;
   }
 }

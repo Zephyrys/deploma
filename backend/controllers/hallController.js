@@ -1,61 +1,65 @@
-const Hall = require('../models/Hall'); // або правильний шлях до твоєї моделі
+const mongoose = require('mongoose');
+const Hall = require('../models/Hall');
 
-// Отримати всі зали
-exports.getAllHalls = async (req, res) => {
+const getAllHalls = async (req, res) => {
   try {
-    const halls = await Hall.find();
-    res.json(halls);
-  } catch (error) {
-    res.status(500).json({ message: 'Помилка при отриманні залів', error });
+    const halls = await Hall.find().populate('cinemaId', 'name location');
+    res.status(200).json(halls);
+  } catch (err) {
+    console.error('[getAllHalls] Error:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
-// Отримати зал по ID
-exports.getHallById = async (req, res) => {
+const getHallById = async (req, res) => {
   try {
-    const hall = await Hall.findById(req.params.id);
-    if (!hall) return res.status(404).json({ message: 'Зал не знайдено' });
+    const hall = await Hall.findById(req.params.id).populate('cinemaId', 'name location');
+    if (!hall) return res.status(404).json({ error: 'Hall not found' });
     res.json(hall);
-  } catch (error) {
-    res.status(500).json({ message: 'Помилка при отриманні залу', error });
+  } catch (err) {
+    console.error('[getHallById] Error:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
-// Створити новий зал
-exports.createHall = async (req, res) => {
+const createHall = async (req, res) => {
   try {
-    const { name, seats } = req.body;
-    const newHall = new Hall({ name, seats });
-    await newHall.save();
-    res.status(201).json(newHall);
-  } catch (error) {
-    res.status(400).json({ message: 'Помилка при створенні залу', error });
+    const hall = new Hall(req.body);
+    await hall.save();
+    res.status(201).json(hall);
+  } catch (err) {
+    console.error('[createHall] Error:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
-// Оновити зал
-exports.updateHall = async (req, res) => {
+const updateHall = async (req, res) => {
   try {
-    const { name, seats } = req.body;
-    const updated = await Hall.findByIdAndUpdate(
-      req.params.id,
-      { name, seats },
-      { new: true }
-    );
-    if (!updated) return res.status(404).json({ message: 'Зал не знайдено' });
-    res.json(updated);
-  } catch (error) {
-    res.status(400).json({ message: 'Помилка при оновленні залу', error });
+    const hall = await Hall.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!hall) return res.status(404).json({ error: 'Hall not found' });
+    res.json(hall);
+  } catch (err) {
+    console.error('[updateHall] Error:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
-// Видалити зал
-exports.deleteHall = async (req, res) => {
+const deleteHall = async (req, res) => {
   try {
-    const deleted = await Hall.findByIdAndDelete(req.params.id);
-    if (!deleted) return res.status(404).json({ message: 'Зал не знайдено' });
-    res.json({ message: 'Зал видалено' });
-  } catch (error) {
-    res.status(500).json({ message: 'Помилка при видаленні залу', error });
+    const hall = await Hall.findByIdAndDelete(req.params.id);
+    if (!hall) return res.status(404).json({ error: 'Hall not found' });
+    res.json({ message: 'Hall deleted successfully' });
+  } catch (err) {
+    console.error('[deleteHall] Error:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+module.exports = {
+  getAllHalls,
+  getHallById,
+  createHall,
+  updateHall,
+  deleteHall,
+};
+

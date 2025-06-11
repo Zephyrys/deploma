@@ -1,18 +1,17 @@
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import MoviePage from './pages/MoviePage';
 import SessionsPage from './pages/SessionPage';
-import SeatSelection from './components/SeatSelection';
+import SeatPage from './pages/Seatpage';
 import TicketsPage from './pages/TicketsPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import AdminPage from './pages/AdminPage';
 import NotFoundPage from './pages/NotFoundPage';
-import ProtectedRoute from './components/protectedRoute';
-import AdminRoute from './components/AdminRoute';
+import ProtectedRoute from './components/Routes/protectedRoute';
+import AdminRoute from './components/Routes/AdminRoute';
 import PaymentPage from './pages/PaymentPage';
-import PaymentSuccess from './pages/PaymentSuccess';
+import PaymentSuccess from './pages/PaymentSuccessPage';
 const AppRoutes = () => {
   return (
     <Routes>
@@ -21,7 +20,7 @@ const AppRoutes = () => {
       <Route path="/sessions" element={<SessionsPage />} />
 
       <Route element={<ProtectedRoute />}>
-        <Route path="/seats/:sessionId" element={<SeatSelection />} />
+        <Route path="/seats/:sessionId" element={<SeatPage />} />
         <Route path="/payment/:sessionId" element={<PaymentPage />} />
         <Route path="/payment-success" element={<PaymentSuccess/>} />
           <Route path="/tickets" element={<TicketsPage />} />

@@ -1,0 +1,127 @@
+.not-found-page {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  animation: fadeInNotFound 0.5s ease forwards;
+  opacity: 0;
+  text-align: center;
+}
+
+.not-found-page h2 {
+  color: #d93025;
+  margin-bottom: 20px;
+  font-weight: 700;
+  font-size: 2rem;
+  animation: slideDownNotFound 0.5s ease forwards;
+  opacity: 0;
+}
+
+.not-found-page p {
+  margin-bottom: 25px;
+  color: #555;
+  font-size: 1.1rem;
+  animation: slideUpNotFound 0.5s ease forwards 0.3s;
+  opacity: 0;
+}
+
+.not-found-page a {
+  display: inline-block;
+  padding: 14px 30px;
+  background-color: #2978b5;
+  color: #fff;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: none;
+  box-shadow: 0 4px 12px #3f8efc88;
+  user-select: none;
+  transition: background-color 0.25s ease, transform 0.2s ease;
+  animation: slideUpNotFound 0.5s ease forwards 0.5s;
+  opacity: 0;
+}
+
+.not-found-page a:hover,
+.not-found-page a:focus {
+  background-color: #1c4e78;
+  transform: translateY(-2px);
+  outline: none;
+  box-shadow: 0 6px 18px #2362a0cc;
+}
+
+
+@keyframes fadeInNotFound {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideDownNotFound {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUpNotFound {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 480px) {
+  .not-found-page {
+    max-width: 90%;
+    margin: 30px auto;
+    padding: 15px;
+    font-size: 0.9rem;
+  }
+
+  .not-found-page h2 {
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+  }
+
+  .not-found-page p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+
+  .not-found-page a {
+    padding: 12px 24px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 481px) {
+  .not-found-page {
+    max-width: 320px;
+    margin: 40px auto;
+    padding: 18px;
+  }
+
+  .not-found-page h2 {
+    font-size: 1.8rem;
+  }
+
+  .not-found-page p {
+    font-size: 1.05rem;
+  }
+
+  .not-found-page a {
+    padding: 13px 28px;
+    font-size: 1.05rem;
+  }
+}

@@ -1,17 +1,17 @@
 const express = require('express');
 const {getSessions,getSessionById,createSession,updateSession,deleteSession} = require('../controllers/sessionController');
 const authenticate = require('../middleware/authenticate');
-const {isAdmin} = require('../middleware/isAdmin');
+const {accessControl} = require('../middleware/accessControl');
 const router = express.Router();
 
 router.get('/', getSessions);
 
 router.get('/:id', getSessionById);
 
-router.post('/', authenticate, isAdmin, createSession);
+router.post('/', authenticate, accessControl('create'), createSession);
 
-router.put('/:id', authenticate, isAdmin, updateSession);
+router.put('/:id', authenticate, accessControl('update'), updateSession);
 
-router.delete('/:id', authenticate, isAdmin, deleteSession);
+router.delete('/:id', authenticate, accessControl('delete'), deleteSession);
 
 module.exports = router;
